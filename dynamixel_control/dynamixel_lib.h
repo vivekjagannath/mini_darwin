@@ -1,5 +1,9 @@
 int write_ang(int id, int angle)
 {
+/* move one single motor.
+ * arguments:
+ * id -> motor id.
+ * angle -> value to turn the motor by (between 0 - 1023).*/
   dynamixel::PortHandler *portHandler = dynamixel::PortHandler::getPortHandler("1");
   dynamixel::PacketHandler *packetHandler = dynamixel::PacketHandler::getPacketHandler(2.0);
 
@@ -22,6 +26,10 @@ int write_ang(int id, int angle)
 
 int syncwrite_ang(int m, int arr[][2])
 {
+/*move multiple angles to multiple motors.
+ * arguments:
+ * m -> number of motors.
+ * arr -> 2D array with id and angle along with them. (Ex: {{1,30}, {2,50}})*/
   dynamixel::PortHandler *portHandler = dynamixel::PortHandler::getPortHandler("1");
   dynamixel::PacketHandler *packetHandler = dynamixel::PacketHandler::getPacketHandler(2.0);
   dynamixel::GroupSyncWrite groupSyncWrite(portHandler, packetHandler, 30, 4);
@@ -50,6 +58,9 @@ int syncwrite_ang(int m, int arr[][2])
 
 int read_ang(int id)
 {
+/*gives the angle by which a motor is turned (value between 0 - 1023).
+ * arguments:
+ * id -> motor id. */
   dynamixel::PortHandler *portHandler = dynamixel::PortHandler::getPortHandler("1");
   dynamixel::PacketHandler *packetHandler = dynamixel::PacketHandler::getPacketHandler(2.0);
 
@@ -71,8 +82,12 @@ int read_ang(int id)
 }
 //--------------------------------------------------------------------------------------------
 
-int set_ang(int curr_id, int new_id)
+int set_id(int curr_id, int new_id)
 {
+/*sets a new id for the motor.
+ * arguments:
+ * curr_id -> current id of the motor.
+ * new_id -> id you want to set for the motor. */
   dynamixel::PortHandler *portHandler = dynamixel::PortHandler::getPortHandler("1");
   dynamixel::PacketHandler *packetHandler = dynamixel::PacketHandler::getPacketHandler(2.0);
 
@@ -94,6 +109,9 @@ int set_ang(int curr_id, int new_id)
 
 int enable_torque(int id)
 {
+/*enables torque for specified motor.
+ * arguments:
+ * id -> motor id. */
   dynamixel::PortHandler *portHandler = dynamixel::PortHandler::getPortHandler("1");
   dynamixel::PacketHandler *packetHandler = dynamixel::PacketHandler::getPacketHandler(2.0);
 
@@ -115,6 +133,9 @@ int enable_torque(int id)
 
 int disable_torque(int id)
 {
+/* diasbles torque
+ * arguments:
+ * id -> motor id. */
   dynamixel::PortHandler *portHandler = dynamixel::PortHandler::getPortHandler("1");
   dynamixel::PacketHandler *packetHandler = dynamixel::PacketHandler::getPacketHandler(2.0);
 
@@ -136,6 +157,10 @@ int disable_torque(int id)
 
 void glow_led(int id, uint8_t value)
 {
+/* glow the led inside the motor.
+ * arguments:
+ * id -> motor id.
+ * value -> bit value. (Ex: 0x01) */
   dynamixel::PortHandler *portHandler = dynamixel::PortHandler::getPortHandler("1");
   dynamixel::PacketHandler *packetHandler = dynamixel::PacketHandler::getPacketHandler(2.0);
 
