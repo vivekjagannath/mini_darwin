@@ -1,6 +1,6 @@
 int write_ang(int id, int angle)
 {
-/* move one single motor.
+  /* move one single motor.
  * arguments:
  * id -> motor id.
  * angle -> value to turn the motor by (between 0 - 1023).*/
@@ -24,11 +24,10 @@ int write_ang(int id, int angle)
 
 //-------------------------------------------------------------------------------------------
 
-int syncwrite_ang(int m, int arr[][2])
+int syncwrite_ang(int arr[][2])
 {
-/*move multiple angles to multiple motors.
+  /*move multiple angles to multiple motors.
  * arguments:
- * m -> number of motors.
  * arr -> 2D array with id and angle along with them. (Ex: {{1,30}, {2,50}})*/
   dynamixel::PortHandler *portHandler = dynamixel::PortHandler::getPortHandler("1");
   dynamixel::PacketHandler *packetHandler = dynamixel::PacketHandler::getPacketHandler(2.0);
@@ -38,9 +37,9 @@ int syncwrite_ang(int m, int arr[][2])
   bool dxl_addparam_result = false;
   uint8_t dxl_error = 0;
 
-  for (int i = 0; i < m; i++)
+  for (int i = 0; i < 16; i++)
   {
-    uint8_t bytearray[4] = {DXL_LOBYTE(DXL_LOWORD(arr[i][1])), DXL_HIBYTE(DXL_LOWORD(arr[i][1])), DXL_LOBYTE(DXL_HIWORD(arr[i][1])), DXL_HIBYTE(DXL_HIWORD(arr[i][1]))};
+    uint8_t bytearray[4] = {DXL_LOBYTE(DXL_LOWORD((512 + (arr[i][1] * 3.41)))), DXL_HIBYTE(DXL_LOWORD((512 + (arr[i][1] * 3.41)))), DXL_LOBYTE(DXL_HIWORD((512 + (arr[i][1] * 3.41)))), DXL_HIBYTE(DXL_HIWORD((512 + (arr[i][1] * 3.41))))};
     dxl_addparam_result = groupSyncWrite.addParam(arr[i][0], bytearray);
   }
 
@@ -58,7 +57,7 @@ int syncwrite_ang(int m, int arr[][2])
 
 int read_ang(int id)
 {
-/*gives the angle by which a motor is turned (value between 0 - 1023).
+  /*gives the angle by which a motor is turned (value between 0 - 1023).
  * arguments:
  * id -> motor id. */
   dynamixel::PortHandler *portHandler = dynamixel::PortHandler::getPortHandler("1");
@@ -84,7 +83,7 @@ int read_ang(int id)
 
 int set_id(int curr_id, int new_id)
 {
-/*sets a new id for the motor.
+  /*sets a new id for the motor.
  * arguments:
  * curr_id -> current id of the motor.
  * new_id -> id you want to set for the motor. */
@@ -109,7 +108,7 @@ int set_id(int curr_id, int new_id)
 
 int enable_torque(int id)
 {
-/*enables torque for specified motor.
+  /*enables torque for specified motor.
  * arguments:
  * id -> motor id. */
   dynamixel::PortHandler *portHandler = dynamixel::PortHandler::getPortHandler("1");
@@ -133,7 +132,7 @@ int enable_torque(int id)
 
 int disable_torque(int id)
 {
-/* diasbles torque
+  /* diasbles torque
  * arguments:
  * id -> motor id. */
   dynamixel::PortHandler *portHandler = dynamixel::PortHandler::getPortHandler("1");
@@ -157,7 +156,7 @@ int disable_torque(int id)
 
 void glow_led(int id, uint8_t value)
 {
-/* glow the led inside the motor.
+  /* glow the led inside the motor.
  * arguments:
  * id -> motor id.
  * value -> bit value. (Ex: 0x01) */
@@ -179,3 +178,53 @@ void glow_led(int id, uint8_t value)
   }
 }
 //----------------------------------------------------------------------------------------------
+
+int moving_speed(int id, int value)
+{
+  /*change the moving speed of the motor.
+ * arguments:
+ * id -> motor id.
+ * value -> speed you want to set (between 0-2047). */
+  dynamixel::PortHandler *portHandler = dynamixel::PortHandler::getPortHandler("1");
+  dynamixel::PacketHandler *packetHandler = dynamixel::PacketHandler::getPacketHandler(2.0);
+
+  int dxl_comm_result = COMM_TX_FAIL;
+  uint8_t dxl_error = 0;
+
+  dxl_comm_result = packetHandler->write2ByteTxRx(portHandler, id, 32, value, &dxl_error);
+
+  if (dxl_comm_result != COMM_SUCCESS)
+  {
+    packetHandler->getTxRxResult(dxl_comm_result);
+  }
+  else if (dxl_error != 0)
+  {
+    packetHandler->getRxPacketError(dxl_error);
+  }
+}
+//--------------------------------------------------------------------------------------------------
+
+int present_speed(int id)
+{
+  /*get the moving speed of the motor.
+ * arguments:
+ * id -> motor id. */
+  dynamixel::PortHandler *portHandler = dynamixel::PortHandler::getPortHandler("1");
+  dynamixel::PacketHandler *packetHandler = dynamixel::PacketHandler::getPacketHandler(2.0);
+
+  int dxl_comm_result = COMM_TX_FAIL;
+  uint8_t dxl_error = 0;
+  uint16_t dxl_present_speed = 0;
+
+  dxl_comm_result = packetHandler->read2ByteTxRx(portHandler, id, 39, (uint16_t *)&dxl_present_speed, &dxl_error);
+
+  if (dxl_comm_result != COMM_SUCCESS)
+  {
+    packetHandler->getTxRxResult(dxl_comm_result);
+  }
+  else if (dxl_error != 0)
+  {
+    packetHandler->getRxPacketError(dxl_error);
+  }
+  return dxl_present_speed;
+}
