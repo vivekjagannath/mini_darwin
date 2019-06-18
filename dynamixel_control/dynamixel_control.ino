@@ -33,11 +33,8 @@ void setup()
     Serial.print("Failed to change the baudrate!\nPress any key to terminate...\n");
     return;
   }
-
-  for (int i = 0; i < 17; i++){
-    enable_torque(i);
-  }
 }
 void loop()
-{   
+{
+  pushup();
 }

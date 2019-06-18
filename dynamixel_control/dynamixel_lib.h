@@ -37,7 +37,7 @@ int syncwrite_ang(int arr[][2])
     bool dxl_addparam_result = false;
     uint8_t dxl_error = 0;
 
-    for (int i = 0; i < 16; i++)
+    for (int i = 0; i < 17; i++)
     {
         uint8_t bytearray[4] = {DXL_LOBYTE(DXL_LOWORD((512 + (arr[i][1] * 3.41)))), DXL_HIBYTE(DXL_LOWORD((512 + (arr[i][1] * 3.41)))), DXL_LOBYTE(DXL_HIWORD((512 + (arr[i][1] * 3.41)))), DXL_HIBYTE(DXL_HIWORD((512 + (arr[i][1] * 3.41))))};
         dxl_addparam_result = groupSyncWrite.addParam(arr[i][0], bytearray);
