@@ -1,4 +1,4 @@
-int write_ang(int id, int angle)
+  int write_ang(int id, int angle)
 {
     /* move one single motor.
  * arguments:

@@ -33,8 +33,10 @@ void setup()
     Serial.print("Failed to change the baudrate!\nPress any key to terminate...\n");
     return;
   }
+  initial_pos();
+  delay(5000);
 }
 void loop()
 {
-  pushup();
+  f_walk();
 }

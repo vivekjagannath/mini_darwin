@@ -102,11 +102,6 @@ int walk()
     delay(100);
     syncwrite_ang(ad8);
     delay(100);
-//    syncwrite_ang(ad9);
-//    delay(300);
-//    syncwrite_ang(ad10);
-//    delay(300);
-//    
 }
 
 int f_walk()
