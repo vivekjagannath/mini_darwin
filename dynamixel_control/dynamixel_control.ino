@@ -38,5 +38,20 @@ void setup()
 }
 void loop()
 {
-  f_walk();
+ char inByte = ' ';
+if(Serial.available()){ // only send data back if data has been sent
+char inByte = Serial.read(); // read the incoming data
+if(char (inByte) == '0'){
+pushup();
+ // send the data back in a new line so that it is not all one long line
+}
+else if (char(inByte)=='1')
+{
+for(int num=0;num<10;num++)
+{walk();}
+//Serial.print(inByte);
+}
+Serial.println(inByte);
+delay(100); // delay for 1/10 of a second
+}
 }
