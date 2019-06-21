@@ -24,7 +24,7 @@
 
 //-------------------------------------------------------------------------------------------
 
-int syncwrite_ang(int arr[][2])
+double syncwrite_ang(double arr[][2])
 {
     /*move multiple angles to multiple motors.
  * arguments:
@@ -228,3 +228,4 @@ int present_speed(int id)
     }
     return dxl_present_speed;
 }
+//---------------------------------------------------------------------------------------------------------
