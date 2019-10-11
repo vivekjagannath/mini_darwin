@@ -1,4 +1,3 @@
-#include <DynamixelSDK.h>
 #include "dynamixel_lib.h"
 #include "motion_sets.h"
 

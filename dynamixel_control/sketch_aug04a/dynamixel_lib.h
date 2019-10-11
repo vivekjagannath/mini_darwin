@@ -1,4 +1,3 @@
-#include <DynamixelSDK.h>
 class dynamixel_lib
 {
 
